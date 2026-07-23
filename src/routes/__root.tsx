@@ -2,6 +2,7 @@ import { HeadContent, Outlet, createRootRoute } from '@tanstack/react-router'
 
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
+import { BobWidget } from '@/components/BobWidget'
 
 import '../styles.css'
 
@@ -21,9 +22,10 @@ function RootComponent() {
     <>
       <HeadContent />
       <Outlet />
+      <BobWidget />
       <TanStackDevtools
         config={{
-          position: 'bottom-right',
+          position: 'bottom-left',
         }}
         plugins={[
           {
