@@ -8,6 +8,7 @@ export interface Cause {
   tools: string[];
   diyCost: string;
   proCost: string;
+  steps: string[];
 }
 
 export interface Diagnosis {
@@ -42,6 +43,13 @@ const PROFILES: Profile[] = [
           tools: ["adjustable wrench", "plumber's tape", "faucet washer kit"],
           diyCost: "$5–$15",
           proCost: "$100–$180",
+          steps: [
+            "Turn off the water supply valves under the sink.",
+            "Open the faucet to release any remaining pressure in the line.",
+            "Remove the handle and unscrew the retaining nut with an adjustable wrench.",
+            "Inspect the washer — if it's cracked or flattened, swap it for a new one from the kit.",
+            "Reassemble, turn the water back on, and check for drips.",
+          ],
         },
         {
           title: "Worn-out valve cartridge",
@@ -51,6 +59,13 @@ const PROFILES: Profile[] = [
           tools: ["faucet cartridge (model-specific)", "cartridge puller tool", "adjustable wrench"],
           diyCost: "$15–$35",
           proCost: "$150–$250",
+          steps: [
+            "Shut off the water supply and open the faucet to drain the lines.",
+            "Pop off the decorative cap and remove the handle screw underneath.",
+            "Pull the handle off, then use a cartridge puller to remove the old cartridge.",
+            "Bring the old cartridge (or its model number) to the hardware store for an exact match.",
+            "Insert the new cartridge, reattach the handle, and turn the water back on.",
+          ],
         },
         {
           title: "Corroded supply line or valve body",
@@ -60,6 +75,11 @@ const PROFILES: Profile[] = [
           tools: [],
           diyCost: "N/A",
           proCost: "$180–$350",
+          steps: [
+            "Shut off the water supply to limit further damage.",
+            "Take photos of the faucet model and valve body to show the plumber.",
+            "Schedule a licensed plumber to inspect and likely replace the faucet or supply lines.",
+          ],
         },
       ],
     },
@@ -84,6 +104,11 @@ const PROFILES: Profile[] = [
           tools: [],
           diyCost: "$0",
           proCost: "$90–$150",
+          steps: [
+            "Find every GFCI outlet in the kitchen, bathrooms, garage, and outdoors.",
+            "Press the small 'Reset' button firmly on each one.",
+            "Plug in a lamp or phone charger at the dead outlet to confirm power is back.",
+          ],
         },
         {
           title: "Tripped breaker or blown fuse",
@@ -93,6 +118,12 @@ const PROFILES: Profile[] = [
           tools: ["voltage tester"],
           diyCost: "$10–$15",
           proCost: "$90–$150",
+          steps: [
+            "Open your electrical panel and look for a breaker sitting in the middle position or fully off.",
+            "Switch it firmly all the way to OFF, then back to ON.",
+            "Test the outlet with a voltage tester or a plugged-in device.",
+            "If it trips again immediately, stop and call an electrician — don't keep resetting it.",
+          ],
         },
         {
           title: "Loose or burnt wiring connection",
@@ -102,6 +133,11 @@ const PROFILES: Profile[] = [
           tools: [],
           diyCost: "N/A",
           proCost: "$150–$350",
+          steps: [
+            "Turn off the breaker for that circuit as a precaution.",
+            "Avoid using the outlet until it's been inspected.",
+            "Call a licensed electrician to open the box and check the wiring.",
+          ],
         },
       ],
     },
@@ -125,6 +161,13 @@ const PROFILES: Profile[] = [
           tools: ["dryer vent cleaning brush kit"],
           diyCost: "$15–$25",
           proCost: "$100–$200",
+          steps: [
+            "Unplug the dryer for safety.",
+            "Remove and clean the lint trap screen by hand.",
+            "Disconnect the exhaust hose from the back of the dryer.",
+            "Run a flexible vent brush through the hose and the wall duct to clear buildup.",
+            "Reconnect everything and run a test cycle to confirm airflow.",
+          ],
         },
         {
           title: "Worn or broken drive belt",
@@ -134,6 +177,13 @@ const PROFILES: Profile[] = [
           tools: ["dryer drive belt (model-specific)", "nut driver set"],
           diyCost: "$20–$40",
           proCost: "$150–$250",
+          steps: [
+            "Unplug the dryer and pull it away from the wall.",
+            "Remove the top and front panels per your model's service guide.",
+            "Locate the belt around the drum and idler pulley — check for fraying or slack.",
+            "Route the new belt exactly as the old one was, following the diagram inside the cabinet.",
+            "Reassemble the panels and run a test cycle.",
+          ],
         },
         {
           title: "Failed heating element or thermal fuse",
@@ -143,6 +193,12 @@ const PROFILES: Profile[] = [
           tools: ["multimeter"],
           diyCost: "$30–$60",
           proCost: "$150–$300",
+          steps: [
+            "Unplug the dryer and locate the heating element housing for your model.",
+            "Use a multimeter to test the element and thermal fuse for continuity.",
+            "Note the part number if either component reads open or shows no continuity.",
+            "Replace the faulty part yourself if comfortable, or call an appliance technician.",
+          ],
         },
       ],
     },
@@ -166,6 +222,13 @@ const PROFILES: Profile[] = [
           tools: ["ceiling fan balancing kit"],
           diyCost: "$8–$15",
           proCost: "$80–$150",
+          steps: [
+            "Turn off the fan and let it come to a complete stop.",
+            "Clip the balancing weight halfway along one blade using the supplied clip.",
+            "Turn the fan on high and observe how much it wobbles.",
+            "Move the clip closer to the hub, farther out, or to a different blade until the wobble minimizes.",
+            "Stick the weight down permanently with its adhesive backing once balanced.",
+          ],
         },
         {
           title: "Loose mounting screws or bracket",
@@ -175,6 +238,12 @@ const PROFILES: Profile[] = [
           tools: ["screwdriver set"],
           diyCost: "$0–$10",
           proCost: "$80–$150",
+          steps: [
+            "Turn off the fan and wait for the blades to stop completely.",
+            "Tighten each blade's mounting screws.",
+            "Check and tighten the screws connecting the fan body to the mounting bracket.",
+            "Turn the fan back on to confirm the wobble is gone.",
+          ],
         },
         {
           title: "Warped blade or bent downrod",
@@ -184,6 +253,13 @@ const PROFILES: Profile[] = [
           tools: ["replacement fan blades", "adjustable wrench"],
           diyCost: "$20–$50",
           proCost: "$120–$220",
+          steps: [
+            "Turn off power to the fan at the breaker.",
+            "Remove the blades and lay them on a flat surface to check for warping.",
+            "Check the downrod for any visible bend.",
+            "Order a matching replacement blade set or downrod using your fan's model number.",
+            "Reinstall and test on low speed before running it on high.",
+          ],
         },
       ],
     },
@@ -207,6 +283,13 @@ const PROFILES: Profile[] = [
           tools: ["self-adhesive drywall patch", "spackling compound", "putty knife"],
           diyCost: "$8–$15",
           proCost: "$100–$180",
+          steps: [
+            "Clean any loose debris out of the hole.",
+            "Press the self-adhesive mesh patch over the hole, centered.",
+            "Spread a thin layer of spackling compound over the patch with a putty knife.",
+            "Let it dry fully, then sand smooth.",
+            "Touch up with paint to match the wall.",
+          ],
         },
         {
           title: "Hole larger than a fist",
@@ -216,6 +299,13 @@ const PROFILES: Profile[] = [
           tools: ["drywall patch kit", "joint compound", "mesh tape", "sanding sponge"],
           diyCost: "$15–$30",
           proCost: "$150–$250",
+          steps: [
+            "Cut the damaged area into a clean square or rectangle.",
+            "Insert backing (a scrap of wood or a drywall repair clip) behind the opening.",
+            "Cut a drywall patch to size and screw or glue it to the backing.",
+            "Apply mesh tape over the seams, then joint compound in thin coats, letting each dry.",
+            "Sand smooth between coats, then prime and paint.",
+          ],
         },
         {
           title: "Damage near an outlet, corner, or frame",
@@ -225,6 +315,13 @@ const PROFILES: Profile[] = [
           tools: ["drywall repair clips", "joint compound", "corner bead"],
           diyCost: "$20–$40",
           proCost: "$180–$300",
+          steps: [
+            "Turn off power to any nearby outlet at the breaker before working near it.",
+            "Cut back the damaged drywall to expose solid, undamaged edges.",
+            "Install new corner bead if the damage is on a corner.",
+            "Patch, tape, and apply joint compound in thin coats, feathering the edges wide.",
+            "Sand, prime, and paint to blend with the surrounding wall.",
+          ],
         },
       ],
     },
@@ -247,6 +344,12 @@ const PROFILES: Profile[] = [
           tools: ["universal toilet flapper"],
           diyCost: "$6–$12",
           proCost: "$90–$150",
+          steps: [
+            "Remove the tank lid and locate the flapper at the bottom of the tank.",
+            "Unhook the old flapper from the flush valve pegs and the flush chain.",
+            "Attach the new universal flapper and connect the chain, leaving a little slack.",
+            "Flush to test, and shorten or lengthen the chain if it doesn't seal properly.",
+          ],
         },
         {
           title: "Fill valve out of adjustment",
@@ -256,6 +359,12 @@ const PROFILES: Profile[] = [
           tools: [],
           diyCost: "$0",
           proCost: "$90–$150",
+          steps: [
+            "Remove the tank lid.",
+            "Locate the float and fill valve.",
+            "Lower the float (or adjust its clip) so the water shuts off below the overflow tube.",
+            "Flush and confirm the water stops refilling once it reaches the correct level.",
+          ],
         },
         {
           title: "Worn fill valve assembly",
@@ -265,6 +374,12 @@ const PROFILES: Profile[] = [
           tools: ["toilet fill valve kit", "adjustable wrench"],
           diyCost: "$15–$25",
           proCost: "$120–$200",
+          steps: [
+            "Turn off the water supply valve behind the toilet and flush to drain the tank.",
+            "Disconnect the water supply line and unscrew the old fill valve from the tank base.",
+            "Install the new fill valve kit, following its height adjustment instructions.",
+            "Reconnect the water line, turn the water back on, and check for leaks.",
+          ],
         },
       ],
     },
@@ -288,6 +403,12 @@ const PROFILES: Profile[] = [
           tools: ["HVAC air filter (correct size)"],
           diyCost: "$10–$25",
           proCost: "$100–$150",
+          steps: [
+            "Locate the filter slot — usually a return air vent or near the air handler.",
+            "Note the size printed on the frame of the old filter.",
+            "Slide out the old filter and insert the new one facing the correct airflow direction (arrow toward the unit).",
+            "Run the system and confirm airflow improves at the vents.",
+          ],
         },
         {
           title: "Thermostat miscalibrated or dead batteries",
@@ -297,6 +418,11 @@ const PROFILES: Profile[] = [
           tools: ["thermostat batteries"],
           diyCost: "$5–$10",
           proCost: "$100–$180",
+          steps: [
+            "Open the thermostat and replace the batteries if it uses them.",
+            "Check that the mode is set correctly (cool/heat) and no schedule is overriding your setting.",
+            "Set the temperature a few degrees past the current room temperature and listen for the system to kick on.",
+          ],
         },
         {
           title: "Low refrigerant or failing compressor",
@@ -306,6 +432,11 @@ const PROFILES: Profile[] = [
           tools: [],
           diyCost: "N/A",
           proCost: "$250–$800",
+          steps: [
+            "Turn off the system to avoid further strain on the compressor.",
+            "Check for ice on the refrigerant lines or outdoor unit.",
+            "Call an EPA-certified HVAC technician to check refrigerant levels and the compressor.",
+          ],
         },
       ],
     },
@@ -329,6 +460,12 @@ const GENERIC: Diagnosis = {
       tools: ["multi-bit screwdriver", "flashlight"],
       diyCost: "$0–$15",
       proCost: "$90–$150",
+      steps: [
+        "Visually inspect the item for anything obviously loose, disconnected, or dirty.",
+        "Re-tighten any visible screws, nuts, or fasteners.",
+        "Clean off any dust, debris, or buildup that could be interfering.",
+        "Test to see if the issue is resolved.",
+      ],
     },
     {
       title: "A worn component that needs replacing",
@@ -338,6 +475,12 @@ const GENERIC: Diagnosis = {
       tools: ["adjustable wrench", "replacement part (model-specific)"],
       diyCost: "$15–$40",
       proCost: "$150–$250",
+      steps: [
+        "Identify the specific part that does the work (seal, belt, filter, cartridge, etc.).",
+        "Note the brand and model info so you can find an exact replacement.",
+        "Order the replacement part.",
+        "Swap it in following the manufacturer's instructions, then test.",
+      ],
     },
     {
       title: "A deeper underlying issue",
@@ -347,6 +490,11 @@ const GENERIC: Diagnosis = {
       tools: [],
       diyCost: "N/A",
       proCost: "$150–$400",
+      steps: [
+        "Stop using the item to avoid making things worse.",
+        "Document when the issue happens and any patterns you notice.",
+        "Contact a licensed professional in the relevant trade for a full diagnosis.",
+      ],
     },
   ],
 };

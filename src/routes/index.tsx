@@ -16,8 +16,10 @@ import {
   CalendarRange,
   PhoneCall,
   SquarePlay,
+  ListChecks,
+  ChevronDown,
 } from "lucide-react";
-import { diagnoseProblem, type Diagnosis } from "@/lib/diagnose.functions";
+import { diagnoseProblem, type Diagnosis, type Cause } from "@/lib/diagnose.functions";
 
 type Difficulty = "5-Minute DIY" | "Weekend Project" | "Call a Pro";
 
@@ -278,93 +280,7 @@ function Results({
 
         <ol className="mt-3 space-y-4">
           {diagnosis.causes.map((c, i) => (
-            <li key={i} className={"p-5 " + CLAY_CARD}>
-              <div className="flex items-start gap-3">
-                <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70 text-sm font-bold text-primary-foreground shadow-md shadow-primary/40 ring-2 ring-white/30">
-                  {i + 1}
-                </span>
-                <div className="flex-1">
-                  <div className="font-semibold text-foreground">{c.title}</div>
-                  <p className="mt-1 text-sm text-muted-foreground">{c.why}</p>
-                </div>
-              </div>
-
-              <div className="mt-4">
-                <DifficultyBadge difficulty={c.difficulty as Difficulty} />
-                <p className="mt-2 text-xs text-muted-foreground">{c.difficultyReason}</p>
-              </div>
-
-              <a
-                href={youtubeUrl(`${c.title} - ${diagnosis.title} repair how to`)}
-                target="_blank"
-                rel="noreferrer noopener"
-                className={"mt-3 " + VIDEO_CHIP}
-              >
-                <span className="flex items-center gap-2">
-                  <SquarePlay className="h-3.5 w-3.5 text-red-500" />
-                  Watch how to fix this
-                </span>
-                <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground group-hover:text-red-500">
-                  YouTube →
-                </span>
-              </a>
-
-              {c.tools.length > 0 && (
-                <div className="mt-4">
-                  <div className="flex items-center justify-between">
-                    <div className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
-                      What you'd need · tap to buy
-                    </div>
-                  </div>
-                  <ul className="mt-2 space-y-1.5">
-                    {c.tools.map((t) => (
-                      <li key={t}>
-                        <a
-                          href={amazonUrl(t)}
-                          target="_blank"
-                          rel="noreferrer noopener"
-                          className={AMAZON_CHIP}
-                        >
-                          <span className="flex items-center gap-2">
-                            <ShoppingCart className="h-3.5 w-3.5 text-amber-600" />
-                            {t}
-                          </span>
-                          <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground group-hover:text-amber-600">
-                            Amazon →
-                          </span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                  {c.tools.length > 1 && (
-                    <a
-                      href={amazonUrl(c.tools.join(" "))}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-b from-amber-500 to-amber-600 py-2.5 text-xs font-bold text-white shadow-lg shadow-amber-600/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-amber-600/40 active:translate-y-0"
-                    >
-                      <ShoppingBag className="h-3.5 w-3.5" />
-                      Shop all {c.tools.length} parts on Amazon
-                    </a>
-                  )}
-                </div>
-              )}
-
-              <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
-                <div className="rounded-2xl border border-border/40 bg-gradient-to-b from-secondary/70 to-secondary/40 p-3 shadow-inner shadow-black/5">
-                  <div className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
-                    DIY cost
-                  </div>
-                  <div className="mt-0.5 font-semibold text-foreground">{c.diyCost}</div>
-                </div>
-                <div className="rounded-2xl border border-border/40 bg-gradient-to-b from-secondary/70 to-secondary/40 p-3 shadow-inner shadow-black/5">
-                  <div className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
-                    Hire a pro
-                  </div>
-                  <div className="mt-0.5 font-semibold text-foreground">{c.proCost}</div>
-                </div>
-              </div>
-            </li>
+            <CauseCard key={i} cause={c} index={i} diagnosisTitle={diagnosis.title} />
           ))}
         </ol>
 
@@ -411,6 +327,141 @@ function Results({
         </div>
       </div>
     </div>
+  );
+}
+
+function CauseCard({
+  cause: c,
+  index: i,
+  diagnosisTitle,
+}: {
+  cause: Cause;
+  index: number;
+  diagnosisTitle: string;
+}) {
+  const [guideOpen, setGuideOpen] = useState(false);
+
+  return (
+    <li className={"p-5 " + CLAY_CARD}>
+      <div className="flex items-start gap-3">
+        <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70 text-sm font-bold text-primary-foreground shadow-md shadow-primary/40 ring-2 ring-white/30">
+          {i + 1}
+        </span>
+        <div className="flex-1">
+          <div className="font-semibold text-foreground">{c.title}</div>
+          <p className="mt-1 text-sm text-muted-foreground">{c.why}</p>
+        </div>
+      </div>
+
+      <div className="mt-4">
+        <DifficultyBadge difficulty={c.difficulty as Difficulty} />
+        <p className="mt-2 text-xs text-muted-foreground">{c.difficultyReason}</p>
+      </div>
+
+      <a
+        href={youtubeUrl(`${c.title} - ${diagnosisTitle} repair how to`)}
+        target="_blank"
+        rel="noreferrer noopener"
+        className={"mt-3 " + VIDEO_CHIP}
+      >
+        <span className="flex items-center gap-2">
+          <SquarePlay className="h-3.5 w-3.5 text-red-500" />
+          Watch how to fix this
+        </span>
+        <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground group-hover:text-red-500">
+          YouTube →
+        </span>
+      </a>
+
+      {c.steps.length > 0 && (
+        <div className="mt-3">
+          <button
+            type="button"
+            onClick={() => setGuideOpen((open) => !open)}
+            className="flex w-full items-center justify-between gap-2 rounded-2xl border border-primary/25 bg-gradient-to-b from-primary/10 to-primary/5 px-3.5 py-2.5 text-sm font-semibold text-foreground shadow-sm shadow-primary/5 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md hover:shadow-primary/20"
+          >
+            <span className="flex items-center gap-2">
+              <ListChecks className="h-3.5 w-3.5 text-primary" />
+              Step-by-step guide
+            </span>
+            <ChevronDown
+              className={
+                "h-4 w-4 text-muted-foreground transition-transform duration-200 " +
+                (guideOpen ? "rotate-180" : "")
+              }
+            />
+          </button>
+          {guideOpen && (
+            <ol className="mt-2.5 space-y-2 rounded-2xl border border-border/40 bg-gradient-to-b from-secondary/60 to-secondary/30 p-4 shadow-inner shadow-black/5">
+              {c.steps.map((step, stepIndex) => (
+                <li key={stepIndex} className="flex gap-3 text-sm text-foreground">
+                  <span className="flex h-5 w-5 flex-none items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70 text-[11px] font-bold text-primary-foreground shadow-sm shadow-primary/30">
+                    {stepIndex + 1}
+                  </span>
+                  <span className="pt-0.5">{step}</span>
+                </li>
+              ))}
+            </ol>
+          )}
+        </div>
+      )}
+
+      {c.tools.length > 0 && (
+        <div className="mt-4">
+          <div className="flex items-center justify-between">
+            <div className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+              What you'd need · tap to buy
+            </div>
+          </div>
+          <ul className="mt-2 space-y-1.5">
+            {c.tools.map((t) => (
+              <li key={t}>
+                <a
+                  href={amazonUrl(t)}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className={AMAZON_CHIP}
+                >
+                  <span className="flex items-center gap-2">
+                    <ShoppingCart className="h-3.5 w-3.5 text-amber-600" />
+                    {t}
+                  </span>
+                  <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground group-hover:text-amber-600">
+                    Amazon →
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          {c.tools.length > 1 && (
+            <a
+              href={amazonUrl(c.tools.join(" "))}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-b from-amber-500 to-amber-600 py-2.5 text-xs font-bold text-white shadow-lg shadow-amber-600/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-amber-600/40 active:translate-y-0"
+            >
+              <ShoppingBag className="h-3.5 w-3.5" />
+              Shop all {c.tools.length} parts on Amazon
+            </a>
+          )}
+        </div>
+      )}
+
+      <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
+        <div className="rounded-2xl border border-border/40 bg-gradient-to-b from-secondary/70 to-secondary/40 p-3 shadow-inner shadow-black/5">
+          <div className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+            DIY cost
+          </div>
+          <div className="mt-0.5 font-semibold text-foreground">{c.diyCost}</div>
+        </div>
+        <div className="rounded-2xl border border-border/40 bg-gradient-to-b from-secondary/70 to-secondary/40 p-3 shadow-inner shadow-black/5">
+          <div className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+            Hire a pro
+          </div>
+          <div className="mt-0.5 font-semibold text-foreground">{c.proCost}</div>
+        </div>
+      </div>
+    </li>
   );
 }
 
