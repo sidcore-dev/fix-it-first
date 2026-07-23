@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import {
   AlertTriangle,
@@ -23,13 +23,33 @@ import { diagnoseProblem, type Diagnosis, type Cause } from "@/lib/diagnose.func
 
 type Difficulty = "5-Minute DIY" | "Weekend Project" | "Call a Pro";
 
-const EXAMPLE_PROMPTS = [
+const FREQUENT_QUESTIONS = [
   "My kitchen faucet drips even when off",
   "Bathroom outlet stopped working",
   "Dryer runs but clothes stay wet",
   "Ceiling fan wobbles on high",
   "Small hole in drywall from doorknob",
+  "Toilet won't stop running",
+  "Toilet tank keeps refilling by itself",
+  "AC is running but not cooling the house",
+  "Thermostat screen is blank",
+  "Furnace is blowing cold air",
+  "Outdoor GFCI outlet keeps tripping",
+  "Bathtub faucet won't stop dripping",
+  "Dryer is making a loud squealing noise",
+  "Ceiling fan makes a clicking noise on low",
 ];
+
+const DEFAULT_SUGGESTION_COUNT = 5;
+
+function suggestionScore(query: string, suggestion: string): number {
+  const q = query.toLowerCase().trim();
+  const s = suggestion.toLowerCase();
+  if (!q) return 0;
+  if (s.includes(q)) return 100;
+  const queryWords = q.split(/\s+/).filter((w) => w.length > 2);
+  return queryWords.reduce((score, w) => (s.includes(w) ? score + 1 : score), 0);
+}
 
 const CLAY_CARD =
   "rounded-3xl border border-border/50 bg-gradient-to-b from-card to-card/70 shadow-xl shadow-black/10 ring-1 ring-white/40";
@@ -82,6 +102,16 @@ function Index() {
     setQuery(t);
     mutation.mutate(t);
   };
+
+  const suggestions = useMemo(() => {
+    const q = query.trim();
+    if (!q) return FREQUENT_QUESTIONS.slice(0, DEFAULT_SUGGESTION_COUNT);
+    return FREQUENT_QUESTIONS.map((s) => ({ s, score: suggestionScore(q, s) }))
+      .filter(({ score }) => score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, DEFAULT_SUGGESTION_COUNT)
+      .map(({ s }) => s);
+  }, [query]);
 
   if (mutation.data) {
     return (
@@ -161,27 +191,29 @@ function Index() {
           </div>
         )}
 
-        <div className="mt-8">
-          <div className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
-            Or try an example
+        {suggestions.length > 0 && (
+          <div className="mt-8">
+            <div className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+              {query.trim() ? "Frequent questions like this" : "Frequent questions"}
+            </div>
+            <ul className="mt-3 space-y-2">
+              {suggestions.map((p) => (
+                <li key={p}>
+                  <button
+                    onClick={() => submit(p)}
+                    disabled={mutation.isPending}
+                    className={
+                      "w-full px-4 py-3 text-left text-sm text-foreground disabled:opacity-50 " +
+                      CLAY_CARD_INTERACTIVE
+                    }
+                  >
+                    {p}
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="mt-3 space-y-2">
-            {EXAMPLE_PROMPTS.map((p) => (
-              <li key={p}>
-                <button
-                  onClick={() => submit(p)}
-                  disabled={mutation.isPending}
-                  className={
-                    "w-full px-4 py-3 text-left text-sm text-foreground disabled:opacity-50 " +
-                    CLAY_CARD_INTERACTIVE
-                  }
-                >
-                  {p}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        )}
 
         <footer className="mt-16 text-center text-xs text-muted-foreground">
           General AI guidance, not a substitute for a pro. Product links are Amazon searches.
