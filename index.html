@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fix-It First — household repair triage</title>
+    <meta
+      name="description"
+      content="Describe what's broken. Get the 3 most likely causes, difficulty, cost, safety red flags, and shopping links for parts."
+    />
+    <meta property="og:title" content="Fix-It First — household repair triage" />
+    <meta property="og:description" content="Repair triage with cost, difficulty, and parts links." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      // Applies the saved theme/text-size/etc. before first paint, so there's
+      // no flash of the wrong theme. Mirrors src/lib/a11y.ts's
+      // applyA11ySettings — kept as a standalone inline script because it has
+      // to run before any JS module graph is available. See a11y.ts for the
+      // client-side logic this mirrors.
+      (function () {
+        try {
+          var raw = window.localStorage.getItem("fixit-a11y");
+          var s = raw ? JSON.parse(raw) : {};
+          var theme = s.theme || "system";
+          var textSize = s.textSize || "normal";
+          var root = document.documentElement;
+          var isDark =
+            theme === "dark" ||
+            (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (isDark) root.classList.add("dark");
+          if (theme === "light") root.classList.add("light");
+          if (textSize === "large") root.classList.add("text-large");
+          if (textSize === "xl") root.classList.add("text-xl");
+          if (s.reduceMotion) root.classList.add("reduce-motion");
+          if (s.highContrast) root.classList.add("high-contrast");
+        } catch (e) {}
+      })();
+    </script>
+    <script type="module" crossorigin src="/fix-it-first/assets/index-CQvr1B1K.js"></script>
+    <link rel="stylesheet" crossorigin href="/fix-it-first/assets/index-Bbn6hCS4.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
