@@ -528,7 +528,6 @@ function matchProfile(problem: string, profiles: Profile[], generic: Diagnosis):
 export const diagnoseProblem = createServerFn({ method: "POST" })
   .validator((d: { problem: string }) => d)
   .handler(async ({ data }) => {
-    await new Promise((resolve) => setTimeout(resolve, 350));
     const profiles = getContent("diagnosis.profiles", DEFAULT_PROFILES);
     const generic = getContent("diagnosis.generic", DEFAULT_GENERIC);
     return matchProfile(data.problem, profiles, generic);

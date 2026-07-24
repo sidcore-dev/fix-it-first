@@ -15,7 +15,9 @@ const config = defineConfig({
     tailwindcss(),
     tanstackStart({ srcDirectory: 'src' }),
     viteReact(),
-    nitro(),
+    nitro({
+      compressPublicAssets: { gzip: true, brotli: true },
+    }),
   ],
 })
 

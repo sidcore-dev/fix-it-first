@@ -121,8 +121,6 @@ function score(query: string, keywords: string[]): number {
 export const askBob = createServerFn({ method: "POST" })
   .validator((message: string) => message)
   .handler(async ({ data: message }) => {
-    await new Promise((resolve) => setTimeout(resolve, 350));
-
     const faq = getContent("bob.faq", DEFAULT_FAQ);
     const settings = getContent("bob.settings", DEFAULT_SETTINGS);
     const ludicrousKeywords = getContent("bob.ludicrousKeywords", DEFAULT_LUDICROUS_KEYWORDS);
