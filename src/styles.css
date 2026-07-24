@@ -21,8 +21,33 @@
   --danger-text: oklch(0.42 0.2 27);
 }
 
+/*
+ * Theme is class-driven (`:root.dark`), not just prefers-color-scheme, so
+ * the accessibility menu can force a choice regardless of system setting.
+ * An inline script in __root.tsx sets this class before first paint —
+ * see src/lib/a11y.ts for the single source of truth on how. The media
+ * query below is kept only as a no-JS fallback.
+ */
+:root.dark {
+  --background: oklch(0.19 0.02 260);
+  --foreground: oklch(0.95 0.01 90);
+  --card: oklch(0.25 0.02 260);
+  --card-foreground: oklch(0.95 0.01 90);
+  --primary: oklch(0.68 0.19 41);
+  --primary-foreground: oklch(0.15 0.02 260);
+  --secondary: oklch(0.31 0.02 260);
+  --secondary-foreground: oklch(0.9 0.01 90);
+  --muted-foreground: oklch(0.68 0.02 260);
+  --border: oklch(0.36 0.02 260);
+  --destructive: oklch(0.48 0.19 27);
+  --destructive-foreground: oklch(0.97 0.01 90);
+  --danger-surface: oklch(0.28 0.05 27);
+  --danger-border: oklch(0.45 0.12 27);
+  --danger-text: oklch(0.8 0.15 27);
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light):not(.dark) {
     --background: oklch(0.19 0.02 260);
     --foreground: oklch(0.95 0.01 90);
     --card: oklch(0.25 0.02 260);
@@ -39,6 +64,55 @@
     --danger-border: oklch(0.45 0.12 27);
     --danger-text: oklch(0.8 0.15 27);
   }
+}
+
+/* Text size: scales the root font size, so every rem-based Tailwind text
+   utility in the app scales proportionally with it — no per-component
+   changes needed. */
+:root {
+  --text-scale: 1;
+}
+:root.text-large {
+  --text-scale: 1.15;
+}
+:root.text-xl {
+  --text-scale: 1.3;
+}
+html {
+  font-size: calc(16px * var(--text-scale));
+}
+
+/* Reduce motion: manual opt-in, in addition to respecting the OS setting
+   below regardless of whether the user has opened the accessibility menu. */
+:root.reduce-motion *,
+:root.reduce-motion *::before,
+:root.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast: most of the app already reads color from these CSS
+   variables, so strengthening them here reaches cards, borders, and body
+   text app-wide without touching individual components. */
+:root.high-contrast:not(.dark) {
+  --border: oklch(0.55 0.02 260);
+  --muted-foreground: oklch(0.32 0.02 260);
+}
+:root.high-contrast.dark {
+  --border: oklch(0.55 0.02 260);
+  --muted-foreground: oklch(0.85 0.02 260);
 }
 
 @theme inline {

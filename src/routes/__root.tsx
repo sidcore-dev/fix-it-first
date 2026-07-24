@@ -5,6 +5,8 @@ import type { QueryClient } from '@tanstack/react-query'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { BobWidget } from '@/components/BobWidget'
+import { AccessibilityMenu } from '@/components/AccessibilityMenu'
+import { THEME_INIT_SCRIPT } from '@/lib/a11y'
 
 import '../styles.css'
 
@@ -21,12 +23,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootDocument({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>
       <body>
         {children}
+        <AccessibilityMenu />
         <BobWidget />
         <TanStackDevtools
           config={{
